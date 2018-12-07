@@ -4,6 +4,9 @@
     [ring.util.http-response :as resp]
     [ring.middleware.reload :refer [wrap-reload]]
     
+    ;; 引入常所用中间件
+    [ring.middleware.defaults :refer :all]
+    
     ;; 引入路由函数
     [compojure.core :refer [routes GET]]
     [compojure.route :as route]))
@@ -34,7 +37,10 @@
 (def app
   (-> app-routes  ;; 这里改为路由返回的 Handler
       wrap-nocache
-      wrap-reload))
+      wrap-reload
+      
+      ;; 插入常用中间件
+      (wrap-defaults site-defaults)))
 
 
 (defn -main []

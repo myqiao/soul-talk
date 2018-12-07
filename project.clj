@@ -9,6 +9,9 @@
                  [ring "1.7.1"]
                  ;; 基于 Ring 的 Response工具库
                  [metosin/ring-http-response "0.9.1"]
+                 ;; 常用中间件集合
+                 [ring/ring-defaults "0.3.2"]
+                 
                  ;; 路由库
                  [compojure "1.6.1"]]
   
