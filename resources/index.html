@@ -3,11 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>index</title>
-</head>
-<body>
-这是一个主页;
 
-<!--  解析后台传来的数据 -->
-你的IP是 {{ ip }}
+    <!-- 引用前端库的样式 -->
+    {% style "/assets/bootstrap/css/bootstrap.min.css" %}
+    {% style "/assets/font-awesome/css/all.css" %}
+
+    <!-- 自定义样式 -->
+    {% style "/css/site.css" %}
+</head>
+
+
+<body>
+这是一个主页; 你的IP是 {{ ip }}
+
+
+<!-- 引用前端库脚本 -->
+{% script "/assets/jquery/jquery.min.js" %}
+{% script "/assets/font-awesome/js/all.js" %}
+{% script "/assets/bootstrap/js/bootstrap.min.js" %}
+
 </body>
 </html>

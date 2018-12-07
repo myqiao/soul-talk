@@ -16,7 +16,13 @@
                  [compojure "1.6.1"]
 
                  ;; 模板库
-                 [selmer "1.12.5"]]
+                 [selmer "1.12.5"]
+
+                 ;; 前端静态资源库
+                 [ring-webjars "0.2.0"]
+				 [org.webjars/jquery "3.3.1-1"]
+				 [org.webjars/bootstrap "4.1.3"]
+				 [org.webjars/popper.js "1.14.4"]]
   
   
   ;; 基于 Lein 的 Ring 插件

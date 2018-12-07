@@ -14,7 +14,10 @@
     [compojure.route :as route]
 
     ;; 引入模板库
-    [selmer.parser :as parser]))
+    [selmer.parser :as parser]
+
+    ;; 引入静态资源库中间件
+    [ring.middleware.webjars :refer [wrap-webjars]]))
 
 
 ;; 渲染 index.html 页面，并传送数据到 :ip 参数
@@ -49,10 +52,11 @@
 
 (def app
   (-> app-routes  ;; 这里改为路由返回的 Handler
-      wrap-nocache
-      wrap-reload
-      
-      ;; 插入常用中间件
+      (wrap-nocache)
+      (wrap-reload)
+      ;; 静态资源中间件
+      (wrap-webjars)  ;; 这行添加的
+      ;; 常用中间件集合
       (wrap-defaults site-defaults)))
 
 
