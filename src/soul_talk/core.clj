@@ -11,10 +11,15 @@
     
     ;; 引入路由函数
     [compojure.core :refer [routes GET]]
-    [compojure.route :as route]))
+    [compojure.route :as route]
+
+    ;; 引入模板库
+    [selmer.parser :as parser]))
+
 
 (defn home-handle [request]
-  (io/resource "index.html"))
+  ;; 渲染模板文件，并传送数据到 :ip 参数
+  (parser/render-file "index.html"  {:ip (:remote-addr request)}))
 
 ;; 自定义中间件：加入不缓存头信息
 (defn wrap-nocache [handler]

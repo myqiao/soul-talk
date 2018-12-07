@@ -13,7 +13,10 @@
                  [ring/ring-defaults "0.3.2"]
                  
                  ;; 路由库
-                 [compojure "1.6.1"]]
+                 [compojure "1.6.1"]
+
+                 ;; 模板库
+                 [selmer "1.12.5"]]
   
   
   ;; 基于 Lein 的 Ring 插件
