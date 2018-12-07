@@ -6,7 +6,7 @@
 
 (defn home-handle [request]
   ;; 这里简化了代码
-  (resp/ok (str "<html><body><body>your IP is："
+  (resp/ok (str "<html><body><body>your IP isss："
                 (:remote-addr request) 
                 "</body></html>")))
 
