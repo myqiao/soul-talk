@@ -1,11 +1,12 @@
 (ns soul-talk.core
   (:require 
     [ring.adapter.jetty :as jetty]
-    [ring.util.http-response :as resp]))
+    [ring.util.http-response :as resp]
+    [ring.middleware.reload :refer [wrap-reload]]))
 
 (defn home-handle [request]
   ;; 这里简化了代码
-  (resp/ok (str "<html><body><body>your IP is"
+  (resp/ok (str "<html><body><body>your IP is："
                 (:remote-addr request) 
                 "</body></html>")))
 
@@ -20,5 +21,5 @@
 
 (defn -main []
   (jetty/run-jetty 
-    (wrap-nocache home-handle)  
+    (-> home-handle wrap-nocache wrap-reload) ;;修改
     {:port 3000 :join? false}))
