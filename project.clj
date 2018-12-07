@@ -8,8 +8,12 @@
                  ;; Ring 库
                  [ring "1.7.1"]
                  ;; 基于 Ring 的 Response工具库
-                 [metosin/ring-http-response "0.9.1"]]
+                 [metosin/ring-http-response "0.9.1"]
+                 ;; 路由库
+                 [compojure "1.6.1"]]
   
+  
+  ;; 基于 Lein 的 Ring 插件
   :plugins [[lein-ring "0.12.4"]]
 
   ;; 插件不通过 main 函数启动，只需要指定一个入口 Handler
