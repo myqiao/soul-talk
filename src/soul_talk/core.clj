@@ -17,9 +17,17 @@
     [selmer.parser :as parser]))
 
 
+;; 渲染 index.html 页面，并传送数据到 :ip 参数
 (defn home-handle [request]
-  ;; 渲染模板文件，并传送数据到 :ip 参数
   (parser/render-file "index.html"  {:ip (:remote-addr request)}))
+
+
+;; 渲染 error.html 404 页面
+(defn error-page [error-details]
+  {:status (:status error-details)
+   :headers {"Content-Type" "text/html; charset=utf-8"}
+   :body (parser/render-file "error.html" error-details)})
+
 
 ;; 自定义中间件：加入不缓存头信息
 (defn wrap-nocache [handler]
@@ -35,7 +43,8 @@
   (routes
     (GET "/" request (home-handle request))
     (GET "/about" [] (str "这是关于我的页面"))
-    (route/not-found "<h1>Page not found</h1>")))
+    ;; 注意这里：路由可以接受一个函数
+    (route/not-found error-page)))  
 
 
 (def app
