@@ -18,8 +18,11 @@
         (assoc-in [:headers "Pragma"] "no-cache"))))
 
 
+(def app
+  (-> home-handle
+      wrap-nocache
+      wrap-reload))
+
 
 (defn -main []
-  (jetty/run-jetty 
-    (-> home-handle wrap-nocache wrap-reload) ;;修改
-    {:port 3000 :join? false}))
+  (jetty/run-jetty app {:port 3000 :join? false}))
