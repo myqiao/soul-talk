@@ -5,7 +5,10 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.8.0"]
                  
-                 [ring "1.7.1"]]
+                 ;; Ring 库
+                 [ring "1.7.1"]
+                 ;; 基于 Ring 的 Response工具库
+                 [metosin/ring-http-response "0.9.1"]]
   
   
   
