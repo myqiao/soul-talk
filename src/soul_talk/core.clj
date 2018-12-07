@@ -35,8 +35,8 @@
 
 (def app
   (-> app-routes  ;; 这里改为路由返回的 Handler
-      wrap-nocache
-      wrap-reload
+      (wrap-nocache)
+      (wrap-reload)
       
       ;; 插入常用中间件
       (wrap-defaults site-defaults)))
