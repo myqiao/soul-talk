@@ -1,16 +1,9 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <!-- Required meta tags -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>index</title>
-    <!-- styles -->
-    {% style "/assets/bootstrap/css/bootstrap.min.css" %}
-    {% style "/assets/font-awesome/css/all.css" %}
-    {% style "/css/site.css" %}
-</head>
-<body>
+<!-- 扩展 base.html -->
+{% extends "base.html" %} 
+
+
+<!-- 扩展 content 部分的内容 -->
+{% block content %}
 <div class="container">
     <header class="blog-header py-3">
         <div class="row flex-nowrap justify-content-between align-items-center">
@@ -136,13 +129,6 @@
     </p>
 </footer>
 
-<!-- scripts -->
-{% script "/assets/jquery/jquery.min.js" %}
-{% script "/assets/font-awesome/js/all.js" %}
-{% script "/assets/bootstrap/js/bootstrap.min.js" %}
 
-<!-- 引用用户代码 -->
-<script src="js/main.js" type="text/javascript"></script> 
-
-</body>
-</html>
+<!-- 这里扩展 content 结束 -->
+{% endblock %}

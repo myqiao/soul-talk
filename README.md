@@ -2,9 +2,9 @@
 
 
 
-## dev03 - 配置 Javascript 支持环境，并完成登录功能
+## dev03 - 配置 Clojurescript 支持环境，并完成登录功能
 
-- 配置 Javascript 支持环境
+- 配置 Clojurescript 支持环境
 - 使用 Selmer 模板的继承扩展功能
 - 实现登录登出功能，能够显示登录状态
 

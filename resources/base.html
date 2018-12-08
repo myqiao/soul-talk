@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html lang="zh-cmn-Hans">
+
+<head>
+    <!-- 必须的标签 -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>使用 Clojure 建立个人网站</title>
+
+    <!-- 样式表 -->
+    {% style "/assets/bootstrap/css/bootstrap.min.css" %}
+    {% style "/assets/font-awesome/css/all.css" %}
+    <link rel="stylesheet" href="/css/site.css">
+
+    <!-- 可扩展的样式表 -->
+    {% block page-css %}
+    {% endblock %}
+</head>
+
+<body>
+
+<div class="container-fluid">
+    <!-- 可扩展的区域 -->
+    {% block content %}
+
+    {% endblock %}
+</div>
+
+<!-- scripts -->
+{% script "/assets/jquery/jquery.min.js" %}
+{% script "/assets/font-awesome/js/all.js" %}
+{% script "/assets/bootstrap/js/bootstrap.min.js" %}
+
+<!-- 引用用户代码 -->
+<script src="/js/main.js" type="text/javascript"></script>
+
+<!-- 可扩展脚本-->
+{% block page-script %}
+
+{% endblock %}
+
+</body>
+</html>
