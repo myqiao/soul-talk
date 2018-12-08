@@ -13,8 +13,14 @@
             <div class="col-4 text-center">
                 <a class="blog-header-logo text-dark" href="#">Soul Talk</a>
             </div>
+            <!-- 根据登录状态显示不同内容 -->
             <div class="col-4 d-flex justify-content-end align-items-center">
-                <a class="btn btn-sm btn-outline-secondary" href="#">登录</a>
+                {% if session.identity %}
+                <span class="navbar-text">欢迎你 {{session.identity}} </span>
+                <a class="btn btn-sm btn-outline-secondary" href="/logout">退出</a>
+                {% else %}
+                <a class="btn btn-sm btn-outline-secondary" href="/login">登录</a>
+                {% endif %}
             </div>
         </div>
     </header>
