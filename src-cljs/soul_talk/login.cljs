@@ -3,17 +3,26 @@
             [domina.events :as ev]
             [reagent.core :as reagent :refer [atom]]))
 
+
+;; 密码格式
+(def ^:dynamic *password-re* #"^(?=.*\d).{4,128}$")
+
+;; Email 格式
+(def ^:dynamic *email-re* #"^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$")
+
+
 ;; 验证 Email 是否为空
 (defn validate-email [email]
-  (if (> (count (dom/value email)) 0)
+  (if (re-matches *email-re* (dom/value email))
     true
     false))
 
 ;; 验证密码是否为空
 (defn validate-password [password]
-  (if (> (count (dom/value password)) 0)
+  (if (re-matches *password-re* (dom/value password))
     true
     false))
+
 
 ;; 验证表单输入
 (defn validate-form []
@@ -85,14 +94,16 @@
 
 
 
-;; 渲染登陆表单组件，并挂载到 `content` div元素上
-(reagent/render
-  [login-component] (dom/by-id "content"))
+
 
 
 ;; 为 Form 绑定 onsubmit 处理函数
 ;; 导出该函数
 (defn ^:export init []
+  ;; 渲染登陆表单组件，并挂载到 `content` div元素上
+  (reagent/render
+    [login-component] (dom/by-id "content"))
+  
   (if (and js/document (.-getElementById js/document))
     (let [login-form (dom/by-id "loginForm")]
       (set! (.-onsubmit login-form) validate-form))))
