@@ -30,7 +30,10 @@
                  [org.webjars/font-awesome "5.5.0"]
                 
                  ;; 启用 ClojureScript 支持
-                 [org.clojure/clojurescript "1.10.439"]]
+                 [org.clojure/clojurescript "1.10.439"]
+
+                 ;; ClojureScript 版的 jQuery
+                 [domina "1.0.3"]]
 
   
   
