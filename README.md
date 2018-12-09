@@ -6,6 +6,7 @@
 - 使用 Domina 库操作 DOM
 - 将验证代码分离到单独的 login.cljs 中，注意要在 `core.cljs` 引入 `login.cljs`，另外，在页面中应用命名空间的时候要使用下划线
 - 使用 Reagent 组件化登录页面
+- 之前是点击提交按钮后验证，修改为输入框丢失焦点后就验证。
 
 ## dev03 - 配置 Clojurescript 支持环境，并完成登录功能
 
