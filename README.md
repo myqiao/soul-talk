@@ -5,6 +5,7 @@
 - 使用原生 DOM 接口进行客户端验证，注意：`login.html` 中两个输入框的 `required` 属性得删除，否则会影响逻辑流程
 - 使用 Domina 库操作 DOM
 - 将验证代码分离到单独的 login.cljs 中，注意要在 `core.cljs` 引入 `login.cljs`，另外，在页面中应用命名空间的时候要使用下划线
+- 使用 Reagent 组件化登录页面
 
 ## dev03 - 配置 Clojurescript 支持环境，并完成登录功能
 

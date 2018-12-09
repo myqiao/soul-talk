@@ -33,7 +33,10 @@
                  [org.clojure/clojurescript "1.10.439"]
 
                  ;; ClojureScript 版的 jQuery
-                 [domina "1.0.3"]]
+                 [domina "1.0.3"]
+
+                 ;; Reagent 库
+                 [reagent "0.8.1"]]
 
   
   
