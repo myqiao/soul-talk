@@ -1,43 +1,27 @@
 (ns soul-talk.login
   (:require [domina :as dom]
             [domina.events :as ev]
-            [reagent.core :as reagent :refer [atom]]))
+            [reagent.core :as reagent :refer [atom]]
+            ;; 引入共享代码
+            [soul-talk.auth-validate :refer [validate-email validate-password]]))
 
 
-;; 密码格式
-(def ^:dynamic *password-re* #"^(?=.*\d).{4,128}$")
-
-;; Email 格式
-(def ^:dynamic *email-re* #"^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$")
-
-
-;; 验证 Email 是否为空
-(defn validate-email [email]
-  (if (re-matches *email-re* (dom/value email))
-    true
-    false))
-
-;; 验证密码是否为空
-(defn validate-password [password]
-  (if (re-matches *password-re* (dom/value password))
-    true
-    false))
-
-
-;; 验证表单输入
+;; 这个函数提交的时候被调用，验证输入是否正确
 (defn validate-form []
   (let [email (dom/by-id "email")
         password (dom/by-id "password")]
-    (if (and (validate-email email) (validate-password password))
+    (if (and (-> email dom/value validate-email ) (-> password dom/value validate-password))
       true
       (do
         (js/alert "email和密码不能为空")
         false))))
 
+
 ;; 如果验证不成功，则在输入框上增加样式；
 ;; 如果验证成功，则移除样式
+;; 这个函数，输入框失去焦点的时候被调用
 (defn validate-invalid [input-id vali-fun]
-  (if-not (vali-fun input-id)
+  (if-not (vali-fun (dom/value input-id)) ;; 修改，验证函数传入文本，而不是 HTML 元素
     (dom/add-class! input-id "is-invalid")
     (dom/remove-class! input-id "is-invalid")))
 
