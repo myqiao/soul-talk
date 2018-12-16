@@ -40,9 +40,14 @@
 ;; Post 登录数据
 (defn handle-login [email password request]
   (if (and (= email "jiesoul@gmail.com") (= password "12345678"))
-  	;; 如果登录成功，则在 Session 中添加信息
+  	;; 如果登录成功，则给模板页面传送 session.identity 变量
+    ;; 注意这里的 Session 不是系统 Session ，而只是传给模板页面的一个变量
     (home-handle (assoc-in request [:session :identity] email))
+
+    ;; 另外，上面的代码直接在 Post 请求中返回页面，这是不正确的
+    ;; 正确的做法应该向相面这样重定向
     ;; (-> (redirect "/") (assoc :session {:identity email}))
+    
     ;; 如果失败，则返回登陆页面，并向页面中传送错误信息
     (login-page (assoc request :error "用户名密码不对"))))
 

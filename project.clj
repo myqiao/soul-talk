@@ -59,7 +59,7 @@
   
   
   ;; 指定源文件和资源文件路径
-  :source-paths ["src"]
+  :source-paths ["src" "src/cljc"]
   :resource-paths ["resources"]
 
   ;; 为 figwheel 指定 CSS 路径
@@ -79,7 +79,7 @@
       ;; 开发环境
       :dev {
         ;; 源代码目录
-        :source-paths ["src-cljs"] 
+        :source-paths ["src-cljs" "src/cljc"] 
         ;; 开启 figwheel                    
         :figwheel     true                             
         :compiler {
