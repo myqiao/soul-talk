@@ -38,7 +38,10 @@
                  ;; Reagent 库
                  [reagent "0.8.1"]
                  ;; Reagent 工具库
-                 [reagent-utils "0.3.1"]]
+                 [reagent-utils "0.3.1"]
+
+                 ;; 引入 Ajax 支持
+                 [cljs-ajax "0.7.4"]]
 
   
   
