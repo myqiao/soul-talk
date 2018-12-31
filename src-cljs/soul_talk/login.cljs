@@ -13,7 +13,7 @@
     (if (and (-> email dom/value validate-email ) (-> password dom/value validate-password))
       true
       (do
-        (js/alert "email和密码不能为空")
+        (js/alert "email和密码格式错误")
         false))))
 
 

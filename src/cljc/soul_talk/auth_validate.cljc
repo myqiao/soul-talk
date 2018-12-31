@@ -8,7 +8,6 @@
 
 ;; 验证 Email 是否为空
 (defn validate-email [email]
-  (println email)
   (if (re-matches *email-re* email);;修改，参数变为文本，而不是 HTML 元素
     true
     false))

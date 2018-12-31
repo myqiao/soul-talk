@@ -36,7 +36,9 @@
                  [domina "1.0.3"]
 
                  ;; Reagent 库
-                 [reagent "0.8.1"]]
+                 [reagent "0.8.1"]
+                 ;; Reagent 工具库
+                 [reagent-utils "0.3.1"]]
 
   
   
