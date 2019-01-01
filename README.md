@@ -14,6 +14,15 @@
 - 之前点击提交按钮后，`validate-form` 直接从数据框中读取数据进行验证，现在从 JSON 变量中读取数据进行验证
 - 之前点击提交按钮，验证成功后，返回 `true` ，然后提交到服务器；现在验证成功后，通过 Ajax 提交数据，页面不刷新
 
+### 提交03：完成服务端的 Ajax 支持
+
+- 添加一个中间件让 Ring 解析 JSON 格式的中间件
+- 修改了 `login` 的 POST 路由
+- 修改了登录 handler
+- 把客户端页面的 `form` 改为 `div` 元素
+- 配置 `wrap-format/wrap-restful-format` 参数，让 JSON 数据关键字化
+
+
 ## dev04 - 使用 Clojurescript 进行客户端验证，组件化页面
 
 - 使用原生 DOM 接口进行客户端验证，注意：`login.html` 中两个输入框的 `required` 属性得删除，否则会影响逻辑流程

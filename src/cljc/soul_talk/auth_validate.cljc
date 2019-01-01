@@ -8,12 +8,12 @@
 
 ;; 验证 Email 是否为空
 (defn validate-email [email]
-  (if (re-matches *email-re* email);;修改，参数变为文本，而不是 HTML 元素
+  (if (and (not (nil? email)) (re-matches *email-re* email));;修改，参数变为文本，而不是 HTML 元素
     true
     false))
 
 ;; 验证密码是否为空
 (defn validate-password [password]
-  (if (re-matches *password-re* password);;修改，参数变为文本，而不是 HTML 元素
+  (if (and (not (nil? password)) (re-matches *password-re* password));;修改，参数变为文本，而不是 HTML 元素
     true
     false))

@@ -5,7 +5,7 @@
             ;; 引入共享代码
             [soul-talk.auth-validate :as validate]
             ;; 引入 Ajax 支持
-            [ajax.core :as ajax]))
+            [ajax.core :as ajax :refer [POST]]))
 
 
 (def login-data (atom {:email "" :password ""}))
@@ -20,13 +20,13 @@
     (dom/remove-class! input "is-invalid")))
 
 
-;; Ajax 成功后调用
+;; Ajax 成功后调用，打印响应数据
 (defn handler-ok [response]
-  (js/alert @login-data))
+  (.log js/console (str "response: " response)))
 
-;; Ajax 失败后调用
-(defn handler-error [{:keys [status status-text]}]
-  (js/alert (sstr status status-text)))
+;; Ajax 失败后调用，显示错误
+(defn handler-error [{:keys [status message] :as resp}]
+  (js/alert "error"))
 
 
 (defn login! []
@@ -59,7 +59,7 @@
 (defn login-component []
   [:div.container
    ;; 登陆表单
-   [:form#loginForm.form-signin
+   [:div#loginForm.form-signin
     ;; 标题
     [:h1.h3.mb-3.font-weight-normal.text-center "Please sign in"]
 
@@ -74,7 +74,7 @@
        :auto-focus  true
        :placeholder "Email Address"
        ;; 焦点丢失的时候，调用验证函数
-       :on-blur   (fn [e]
+       :on-change   (fn [e]
                       (let [d (.. e -target)]
                         (swap! login-data assoc :email (.-value d))
                         (validate-invalid d validate/validate-email)))}]
@@ -94,7 +94,7 @@
        ;; 之前的代码仅仅将元素和要使用的函数传给 validate-invalid
        ;; 现在还需要向 JSON 中添加数据
        ;; 此外，之前直接通过 id 获取组件 ，现在则是通过事件对象 e 获得组件
-       :on-blur     (fn [e]
+       :on-change     (fn [e]
                       (let [d (.-target e)]
                         (swap! login-data assoc :password (.-value d))
                         (validate-invalid d validate/validate-password)))}]

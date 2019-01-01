@@ -3,9 +3,11 @@
     [clojure.java.io :as io]
     
     [ring.adapter.jetty :as jetty]
-    [ring.util.response :refer [redirect]]
+    [ring.util.response :as res :refer [redirect]]
     [ring.util.http-response :as resp]
     [ring.middleware.reload :refer [wrap-reload]]
+    
+    [soul-talk.auth-validate :as auth-validate]
     
     ;; 引入常所用中间件
     [ring.middleware.defaults :refer :all]
@@ -18,7 +20,10 @@
     [selmer.parser :as parser]
 
     ;; 引入静态资源库中间件
-    [ring.middleware.webjars :refer [wrap-webjars]]))
+    [ring.middleware.webjars :refer [wrap-webjars]]
+    
+    ;; 支持 JSON 格式的中间件
+    [ring.middleware.format :as wrap-format]))
 
 
 ;; 渲染 index.html 页面
@@ -38,18 +43,20 @@
   (parser/render-file "login.html" {}))
 
 ;; Post 登录数据
-(defn handle-login [email password request]
-  (if (and (= email "jiesoul@gmail.com") (= password "12345678"))
-  	;; 如果登录成功，则给模板页面传送 session.identity 变量
-    ;; 注意这里的 Session 不是系统 Session ，而只是传给模板页面的一个变量
-    (home-handle (assoc-in request [:session :identity] email))
+(defn handle-login [{:keys [params] :as request}]
+  (let [email (:email params)
+        password (:password params)]
+    (cond
+      (not (auth-validate/validate-email email)) (res/response {:status 400 :errors "Email不合法"})
+      (not (auth-validate/validate-password password)) (res/response {:status 400 :errors "密码不合法"})
+      (and (= email "jiesoul@gmail.com")
+           (= password "12345678"))
+      (do
+        (assoc-in request [:session :identity] email)
+        (res/response {:status :ok}))
+      :else (res/response {:status 400 :errors "用户名密码不对"}))))
 
-    ;; 另外，上面的代码直接在 Post 请求中返回页面，这是不正确的
-    ;; 正确的做法应该向相面这样重定向
-    ;; (-> (redirect "/") (assoc :session {:identity email}))
-    
-    ;; 如果失败，则返回登陆页面，并向页面中传送错误信息
-    (login-page (assoc request :error "用户名密码不对"))))
+
 
 ;; 退出登录，清空 Session ，调整到首页
 (defn handle-logout [request]
@@ -75,7 +82,8 @@
 
     ;; 登录路由，Get 和 POST=============
     (GET "/login" request (login-page request))
-    (POST "/login" [email password :as req] (handle-login email password req))
+    ;; (POST "/login" [email password :as req] (handle-login email password req))
+    (POST "/login" req (handle-login req)) ;;post 路由修改
 
     ;; 退出登录路由==========
     (GET "/logout" request (handle-logout request))
@@ -90,6 +98,8 @@
       (wrap-reload)
       ;; 静态资源中间件
       (wrap-webjars)  ;; 这行添加的
+      
+      (wrap-format/wrap-restful-format :formats [:json-kw])
 
       ;; 常用中间件集合
       ;; 关闭跨域攻击中间件========

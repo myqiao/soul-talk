@@ -41,7 +41,10 @@
                  [reagent-utils "0.3.1"]
 
                  ;; 引入 Ajax 支持
-                 [cljs-ajax "0.7.4"]]
+                 [cljs-ajax "0.7.4"]
+                 
+                 ;; 支持 JSON 格式的中间件
+                 [ring-middleware-format "0.7.2"]]
 
   
   
