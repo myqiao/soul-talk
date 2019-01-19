@@ -7,7 +7,7 @@
 
   :dependencies [
                  ;; 基础库
-                 [org.clojure/clojure "1.9.0"]
+                 [org.clojure/clojure "1.10.0"]
                  
                  ;; Ring 库
                  [ring "1.7.1"]
@@ -25,9 +25,9 @@
                  ;; 前端静态资源库
                  [ring-webjars "0.2.0"]
 				         [org.webjars/jquery "3.3.1-1"]
-				         [org.webjars/bootstrap "4.1.3"]
-				         [org.webjars/popper.js "1.14.4"]
-                 [org.webjars/font-awesome "5.5.0"]
+				         [org.webjars/bootstrap "4.2.1"]
+				         [org.webjars/popper.js "1.14.6"]
+                 [org.webjars/font-awesome "5.6.3"]
                 
                  ;; 启用 ClojureScript 支持
                  [org.clojure/clojurescript "1.10.439"]
@@ -38,13 +38,20 @@
                  ;; Reagent 库
                  [reagent "0.8.1"]
                  ;; Reagent 工具库
-                 [reagent-utils "0.3.1"]
+                 [reagent-utils "0.3.2"]
 
                  ;; 引入 Ajax 支持
-                 [cljs-ajax "0.7.4"]
+                 [cljs-ajax "0.8.0"]
                  
                  ;; 支持 JSON 格式的中间件
-                 [ring-middleware-format "0.7.2"]]
+                 [ring-middleware-format "0.7.3"]
+
+                 ;; 增加数据库功能
+                 [org.clojure/java.jdbc "0.7.8"]
+                 [org.xerial/sqlite-jdbc "3.25.2"]
+
+                 ;; 数据库迁移
+                 [ragtime "0.8.0"]]
 
   
   
@@ -63,7 +70,7 @@
   
   ;; 不使用插件的时候，程序仍然从 main 函数启动
   ;; 启用 ClojureScript 之后，要关闭预编译 AOT
-  :main ^:skip-aot soul-talk.core
+  ;; :main ^:skip-aot soul-talk.core
   
   
   ;; 指定源文件和资源文件路径
@@ -108,8 +115,9 @@
 
 
   :profiles {
-        :user {
-            :dependencies []
-            :plugins [[lein-ancient "0.6.15"]]}}
+        :dev {
+            :source-paths ["env/dev/clj"]
+            :plugins [[lein-ancient "0.6.15"]]
+            :dependencies [[ring/ring-devel "1.7.1"]]}}
 
 )
