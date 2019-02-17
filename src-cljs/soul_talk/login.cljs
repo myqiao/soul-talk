@@ -2,10 +2,10 @@
   (:require [domina :as dom]
             [domina.events :as ev]
             [reagent.core :as reagent :refer [atom]]
-            ;; 引入共享代码
             [soul-talk.auth-validate :as validate]
-            ;; 引入 Ajax 支持
-            [ajax.core :as ajax :refer [POST]]))
+            [ajax.core :as ajax]
+            [soul-talk.auth-validate :refer [login-errors]]
+            [taoensso.timbre :as log]))
 
 
 (def login-data (atom {:email "" :password ""}))
@@ -29,14 +29,22 @@
   (js/alert "error"))
 
 
-(defn login! []
-  (ajax/POST
-    "/login"
-    {:format        :json
-     :headers       {"Accept" "application/transit+json"}
-     :params        @login-data
-     :handler       handler-ok
-     :error-handler handler-error}))
+
+
+(defn login! [login-data errors]
+  (reset! errors (login-errors @login-data))
+  (if-not @errors
+    (ajax/POST "/login"
+               {:format        :json
+                :headers       {"Accept" "application/transit+json"}
+                :params        @login-data
+                :handler       #(set! (.. js/window -location -href) "/")
+                :error-handler #(let [msg (get-in % [:response "message"])]
+                                  (log/error msg)
+                                  (js/alert msg))})
+    (let [error (vals @errors)]
+      (log/error error)
+      (js/alert error))))
 
 
 ;; 这个函数提交的时候被调用，类客户端验证输入格式是否正确
@@ -57,6 +65,9 @@
 
 ;; 组件化登陆表单
 (defn login-component []
+  (let [login-data (atom {})
+        errors (atom {})]
+
   [:div.container
    ;; 登陆表单
    [:div#loginForm.form-signin
@@ -110,13 +121,15 @@
     [:div#error.invalid-feedback]
 
     ;; 提交按钮
-    [:input#submit.btn.btn-lg.btn-primary.btn-block
-     {:type  "button"
-      :value "登录"
-      :on-click #(validate-form)}]
-
-    ;; 版权信息
-    [:p.mt-5.mb-3.text-muted "&copy @2018"]]])
+    [:input#submit.btn.btn-primary.btn-lg.btn-block
+         {:type     :submit
+          :value    "登录"
+          :on-click #(login! login-data errors)}]
+        [:input#submit.btn.btn-primary.btn-lg.btn-block
+         {:type     :button
+          :value    "注册"
+          :on-click #(set! (.. js/window -location -href) "/register")}]
+        [:p.mt-5.mb-3.text-muted "&copy @2018"]]]))
 
 
 

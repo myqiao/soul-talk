@@ -8,5 +8,8 @@
 
 
 {% block page-script %}
-<script>soul_talk.core.init();</script>
+<script>
+	var identity = "{{ session.identity }}";
+    soul_talk.core.init();
+</script>
 {% endblock %}

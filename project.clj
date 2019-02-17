@@ -20,14 +20,14 @@
                  [compojure "1.6.1"]
 
                  ;; 模板库
-                 [selmer "1.12.5"]
+                 [selmer "1.12.6"]
 
                  ;; 前端静态资源库
                  [ring-webjars "0.2.0"]
-				         [org.webjars/jquery "3.3.1-1"]
+				         [org.webjars/jquery "3.3.1-2"]
 				         [org.webjars/bootstrap "4.2.1"]
 				         [org.webjars/popper.js "1.14.6"]
-                 [org.webjars/font-awesome "5.6.3"]
+                 [org.webjars/font-awesome "5.7.1"]
                 
                  ;; 启用 ClojureScript 支持
                  [org.clojure/clojurescript "1.10.439"]
@@ -51,7 +51,19 @@
                  [org.xerial/sqlite-jdbc "3.25.2"]
 
                  ;; 数据库迁移
-                 [ragtime "0.8.0"]]
+                 [ragtime "0.8.0"]
+
+                 ;; 加密库
+                 [buddy "2.0.0"]
+                 ;; 验证库
+                 [bouncer "1.0.1"]
+                 ;; 时间库
+                 [clj-time "0.15.1"]
+                 ;; 日志相关
+                 [com.taoensso/timbre "4.10.0"]
+                 ;;[com.fzakaria/slf4j-timbre "0.3.12"]
+
+                 ]
 
   
   
